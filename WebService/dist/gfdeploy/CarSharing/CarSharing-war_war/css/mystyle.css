@@ -5,6 +5,11 @@ h2{
     text-align: center;
     
 }
+select{
+    width:83%;
+    height: 30px;
+    margin-left: 10px;
+}
 #type{
     float:left;
 }
@@ -17,9 +22,6 @@ h4{
 select.orderSelector{
    margin-top: 10px;
    margin-left: 5px;
-}
-.pizzaSelector{
-    width: 100%;
 }
 .main-container{
     position: absolute;
@@ -71,5 +73,8 @@ select.orderSelector{
 }
 #padded-label{
     padding-top: 2px;
+}
+.spinner-container{
+    padding: 10px 10px 10px 10px;
 }
 

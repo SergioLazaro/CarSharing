@@ -41,18 +41,13 @@ public class ListPostServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             List<PostEntity> array = postSessionBean.getPosts();
-            JSONObject jsonObject;
-            JSONArray jsonArray = new JSONArray();
-            for(int i = 0; i < array.size(); i++){
-                jsonObject = new JSONObject();
-                jsonObject.put("postType:", array.get(i).getPostType());
-                jsonObject.put("username:",array.get(i).getUsername());
-                jsonObject.put("date:",array.get(i).getDate());
-                jsonObject.put("departure:",array.get(i).getDeparture());
-                jsonObject.put("destination:",array.get(i).getDestination());
-                jsonObject.put("carType:",array.get(i).getCarType());
-                jsonObject.put("carYear:",array.get(i).getCarYear());
-                jsonArray = jsonArray.put(jsonObject);
+            String option = request.getParameter("type");
+            JSONArray jsonArray;
+            if(option.equals("car")){
+                jsonArray = populateCar(array);
+            }
+            else{
+                jsonArray = populateTaxi(array);
             }
             response.setContentType("application/json");
             response.getWriter().write(jsonArray.toString());
@@ -61,7 +56,63 @@ public class ListPostServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-
+    
+    private JSONArray populateCar(List<PostEntity> array){
+        JSONArray jsonArray = new JSONArray();
+        try{
+            JSONObject jsonObject;
+            for(int i = 0; i < array.size(); i++){
+                if(array.get(i).getPostType().equals("car")){
+                    jsonObject = createJSONObject(array.get(i));
+                    jsonArray = jsonArray.put(jsonObject);
+                }
+                
+            }
+            return jsonArray;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    private JSONArray populateTaxi(List<PostEntity> array){
+        JSONArray jsonArray = new JSONArray();
+        try{
+            JSONObject jsonObject;
+            for(int i = 0; i < array.size(); i++){
+                if(array.get(i).getPostType().equals("taxi")){
+                    jsonObject = createJSONObject(array.get(i));
+                    jsonArray = jsonArray.put(jsonObject);
+                }
+            }
+            return jsonArray;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    private JSONObject createJSONObject(PostEntity post){
+        try{
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("postType:", post.getPostType());
+            jsonObject.put("username:",post.getUsername());
+            jsonObject.put("date:",post.getDate());
+            jsonObject.put("departure:",post.getDeparture());
+            jsonObject.put("destination:",post.getDestination());
+            jsonObject.put("carType:",post.getCarType());
+            jsonObject.put("carYear:",post.getCarYear());
+            return jsonObject;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

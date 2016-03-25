@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="top.jsp"/>
+<script src="../js/managePosts.js"></script>
 <div class="main-container">
     <%
         // Get an array of Cookies associated with this domain
@@ -22,30 +23,62 @@
         if(username != null){   //If user has logged in
             %>
             <div class="main-container-signin" id="grey-background">
-                <form action="../startOrder" method="POST">
+                <form action="../PostServlet" method="POST">
                     <h2> Choose your transport</h2></br>
-                    <div class="vehicle">
-                        <label class="padded-label">Transport type: </label>
-                        <select name="transport" id="selector">
+                    <div class="spinner-container">
+                        <label class="padded-label">Transport: </label>
+                        <select name="transport" id="transport-selector">
                             <option value="car">Car</option>
                             <option value="taxi">Taxi</option>
                         </select>
                     </div>
-                    <label class="sr-only">Date</label>
-                    <input name="date" class="form-control" type="date" autofocus="" required placeholder="Date"/>
-                    <label class="sr-only">Departure</label>
-                    <input name="departure" class="form-control" type="text" autofocus="" required placeholder="Departure"/>
-                    <div id="destination-block">
-                        <label class="sr-only">Destination</label>
-                        <input name="destination" class="form-control" type="text" autofocus="" required placeholder="Destination"/>
+                    <div class="vehicle">
+                        <label class="sr-only">Date</label>
+                        <input name="date" class="form-control" type="date" autofocus="" required placeholder="Date"/>
                     </div>
-                    <div id="type-block">
+                    <div class="spinner-container">
+                        <label class="padded-label">Departure: </label>
+                        <select name="departure" id="selectorDeparture">
+                            <option>-</option>
+                            <option>Bologna</option>
+                            <option>Firenze</option>
+                            <option>Genova</option>
+                            <option>Milano</option>
+                            <option>Napoli</option>
+                            <option>Padova</option>
+                            <option>Pisa</option>
+                            <option>Roma</option>
+                            <option>Siena</option>
+                            <option>Torino</option>
+                            <option>Venezia</option>
+                            <option>Verona</option>
+                        </select>
+                    </div>
+                    <div class="spinner-container" id="destination-block">
+                        <label class="padded-label">Destination: </label>
+                        <select name="destination" id="selectorDestination">
+                            <option>-</option>
+                            <option>Bologna</option>
+                            <option>Firenze</option>
+                            <option>Genova</option>
+                            <option>Milano</option>
+                            <option>Napoli</option>
+                            <option>Padova</option>
+                            <option>Pisa</option>
+                            <option>Roma</option>
+                            <option>Siena</option>
+                            <option>Torino</option>
+                            <option>Venezia</option>
+                            <option>Verona</option>
+                        </select>
+                    </div>
+                    <div class="vehicle" id="type-block">
                         <label class="sr-only">CarType</label>
-                        <input name="cartype" class="form-control" type="text" autofocus="" required placeholder="Car type"/>
+                        <input name="cartype" class="form-control" type="text" autofocus="" placeholder="Car type"/>
                     </div>
-                    <div id="year-block">
+                    <div class="vehicle" id="year-block">
                         <label class="sr-only">CarYear</label>
-                        <input name="caryear" class="form-control" type="number" autofocus="" required placeholder="Car year"/>
+                        <input name="caryear" class="form-control" type="number" autofocus="" placeholder="Car year"/>
                     </div>
                  
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Confirm</button>
@@ -59,11 +92,4 @@
         }
     %>
 </div> 
-    <script>
-        $(document).ready(function(){
-            $('#selector').on('change',function(){
-                if()
-            });
-        });
-    </script>
 <jsp:include page="bottom.html"/>

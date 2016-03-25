@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,22 +41,28 @@ public class PostServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         //Getting parameters
-        String username = request.getParameter("username");
+        Cookie[] cookies = request.getCookies();
+        String email = "";
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("email")) {
+                email = cookie.getValue();
+            }
+        }
         String date = request.getParameter("date");
         String departure = request.getParameter("departure");
         String destination = request.getParameter("destination");
         String carType = request.getParameter("carType");
         String carYear = request.getParameter("carYear");
-        if(username != null && date != null && departure != null){
+        if(email != null && date != null && departure != null){
             if(destination != null && carType != null && carYear != null){   //Car post
-                postSessionBean.insertCarPost(username,date,departure,destination,
+                postSessionBean.insertCarPost(email,date,departure,destination,
                         carType,carYear);
             }
             else{   //Taxi post
-                postSessionBean.insertTaxiPost(username,date,departure);
+                postSessionBean.insertTaxiPost(email,date,departure);
             }
             try {
-                response.sendRedirect("ListPostServlet");
+                response.sendRedirect("pages/index.jsp?error=0");
             } catch (IOException ex) {
                 Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
             }

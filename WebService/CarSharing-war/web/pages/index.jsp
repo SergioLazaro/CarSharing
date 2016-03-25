@@ -16,7 +16,7 @@
             %>
                 <div class="alert alert-success">
                     <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Success!</strong> Order sent successfuly.
+                    <strong>Success!</strong> Post created successfuly.
                 </div>
             <%
         }
