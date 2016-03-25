@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">ConpartirAndroid</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string-array name="post_types">
+        <item>Car</item>
+        <item>Taxi</item>
+    </string-array>
+    <string-array name="cities">
+        <item>-</item>
+        <item>Bologna</item>
+        <item>Firenze</item>
+        <item>Genova</item>
+        <item>Milano</item>
+        <item>Napoli</item>
+        <item>Padova</item>
+        <item>Pisa</item>
+        <item>Roma</item>
+        <item>Siena</item>
+        <item>Torino</item>
+        <item>Venezia</item>
+        <item>Verona</item>
+    </string-array>
+</resources>
