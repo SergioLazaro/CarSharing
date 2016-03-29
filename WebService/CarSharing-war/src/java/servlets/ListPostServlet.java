@@ -42,15 +42,18 @@ public class ListPostServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             List<PostEntity> array = postSessionBean.getPosts();
             String option = request.getParameter("type");
-            JSONArray jsonArray;
+            JSONArray jsonArray = new JSONArray();
             if(option.equals("car")){
                 jsonArray = populateCar(array);
             }
-            else{
+            else if(option.equals("taxi")){
                 jsonArray = populateTaxi(array);
             }
+            JSONObject mainJSON = new JSONObject();
+            mainJSON.put("posts", jsonArray);
+            //response.setContentType("text/html");
             response.setContentType("application/json");
-            response.getWriter().write(jsonArray.toString());
+            response.getWriter().write(mainJSON.toString());
         }
         catch(Exception e){
             e.printStackTrace();
@@ -97,13 +100,13 @@ public class ListPostServlet extends HttpServlet {
     private JSONObject createJSONObject(PostEntity post){
         try{
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("postType:", post.getPostType());
-            jsonObject.put("username:",post.getUsername());
-            jsonObject.put("date:",post.getDate());
-            jsonObject.put("departure:",post.getDeparture());
-            jsonObject.put("destination:",post.getDestination());
-            jsonObject.put("carType:",post.getCarType());
-            jsonObject.put("carYear:",post.getCarYear());
+            jsonObject.put("postType", post.getPostType());
+            jsonObject.put("username",post.getUsername());
+            jsonObject.put("date",post.getDate());
+            jsonObject.put("departure",post.getDeparture());
+            jsonObject.put("destination",post.getDestination());
+            jsonObject.put("carType",post.getCarType());
+            jsonObject.put("carYear",post.getCarYear());
             return jsonObject;
         }
         catch(Exception e){

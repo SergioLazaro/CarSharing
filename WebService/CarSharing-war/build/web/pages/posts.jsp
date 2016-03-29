@@ -28,7 +28,7 @@
                     <div class="spinner-container">
                         <label class="padded-label">Transport: </label>
                         <select name="transport" id="transport-selector">
-                            <option value="car">Car</option>
+                            <option value="car" default>Car</option>
                             <option value="taxi">Taxi</option>
                         </select>
                     </div>

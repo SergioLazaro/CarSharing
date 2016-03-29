@@ -48,29 +48,24 @@ public class PostServlet extends HttpServlet {
                 email = cookie.getValue();
             }
         }
+        String postType = request.getParameter("transport");
         String date = request.getParameter("date");
         String departure = request.getParameter("departure");
         String destination = request.getParameter("destination");
-        String carType = request.getParameter("carType");
-        String carYear = request.getParameter("carYear");
-        if(email != null && date != null && departure != null){
-            if(destination != null && carType != null && carYear != null){   //Car post
-                postSessionBean.insertCarPost(email,date,departure,destination,
+        String carType = request.getParameter("cartype");
+        String carYear = request.getParameter("caryear");
+        if(postType.equals("car")){
+            postSessionBean.insertCarPost(email,date,departure,destination,
                         carType,carYear);
-            }
-            else{   //Taxi post
-                postSessionBean.insertTaxiPost(email,date,departure);
-            }
-            try {
-                response.sendRedirect("pages/index.jsp?error=0");
-            } catch (IOException ex) {
-                Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         else{
-            //Error
+            postSessionBean.insertTaxiPost(email,date,departure);
         }
-
+        try {
+            response.sendRedirect("pages/index.jsp?error=0");
+        } catch (IOException ex) {
+            Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -52,17 +52,14 @@ select.orderSelector{
     color: white;
     margin-top: 5px;
 }
-.pizza-block{
+.info-container{
     position: absolute;
-    left: 15%;
-    right: auto;
-    width: 70%;
-}
-.pizza-menu{
-    font-size: 16px;
-}
-#order{
-    width: 100%;
+    text-align: left;
+    width: 75%;
+    left: 5%;
+    top: 80px;
+    padding: 0.5cm 1cm 1cm 1cm;
+    background-color: #E0E0E0;
 }
 .gender{
     padding: 8px 8px 5px 8px;

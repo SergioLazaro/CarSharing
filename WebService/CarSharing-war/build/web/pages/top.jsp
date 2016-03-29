@@ -48,8 +48,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
             <ul class="nav navbar-nav">
-                <li id="car-nav"><a href="cars.jsp">Car posts</a></li>
-                <li id="taxi-nav"><a href="taxies.jsp">Taxi posts</a></li>
+                <li id="vehicle-nav"><a href="vehicle.jsp">See posts</a></li>
                 <li id="post-nav"><a href="posts.jsp">Create post</a></li>
                 <li id="about-nav"><a href="about.jsp">About</a></li>
             </ul>
