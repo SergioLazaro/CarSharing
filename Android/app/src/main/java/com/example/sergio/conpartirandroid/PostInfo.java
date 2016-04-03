@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -40,9 +41,13 @@ public class PostInfo extends Fragment {
         //Display username
         TextView usernameText = (TextView) view.findViewById(R.id.displayUsername);
         usernameText.setText(display.getUsername());
+        //Display Date
+        TextView dateText = (TextView) view.findViewById(R.id.displayDate);
+        dateText.setText(display.getDate());
         //Display From
         TextView fromText = (TextView) view.findViewById(R.id.displayFrom);
         fromText.setText(display.getFrom());
+
         if(!display.getTo().equals("")){    //Check if there is a Car Publication
             //Display To
             TextView toText = (TextView) view.findViewById(R.id.displayTo);
@@ -50,12 +55,20 @@ public class PostInfo extends Fragment {
         }
         else{       //Otherwise, we have to change 'from' to 'city'
             TextView fromOrCity = (TextView) view.findViewById(R.id.fromOrCityText);
-            fromOrCity.setText("City");
+            fromOrCity.setText("City: ");
+            //Do not display To layout:
+            LinearLayout destinationLayout = (LinearLayout) view.findViewById(R.id.destinationLayout);
+            destinationLayout.setVisibility(View.INVISIBLE);
         }
-        //Display Date
-        TextView dateText = (TextView) view.findViewById(R.id.displayDate);
-        dateText.setText(display.getDate());
-        if(!display.getCarname().equals("") && !display.getCaryear().equals("")){
+
+        if(display.getCarname().equals("") && display.getCaryear().equals("")){
+            //Hide car type and car year layouts
+            LinearLayout carTypeLayout = (LinearLayout) view.findViewById(R.id.cartypeLayout);
+            carTypeLayout.setVisibility(View.INVISIBLE);
+            LinearLayout carYearLayout = (LinearLayout) view.findViewById(R.id.caryearLayout);
+            carYearLayout.setVisibility(View.INVISIBLE);
+        }
+        else{
             //Display Car type
             TextView cartypeText = (TextView) view.findViewById(R.id.displayCarType);
             cartypeText.setText(display.getCarname());

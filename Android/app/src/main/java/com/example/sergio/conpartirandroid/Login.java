@@ -57,6 +57,8 @@ public class Login extends Fragment {
 
     private void confirm(View v, String email, String password){
         if(checkSQLInjection(email) && checkSQLInjection(password)){
+            Log.i("Email",email);
+            Log.i("Password",password);
             new LoginTask(v.getContext()).execute(email,password);
             //Always allowing access with the email inserted
             MainActivity.setUsername(email);

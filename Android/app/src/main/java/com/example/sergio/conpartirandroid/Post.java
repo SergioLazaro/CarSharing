@@ -47,19 +47,10 @@ public class Post extends Fragment {
 
     private Calendar myCalendar;
 
-    private String showMessage;
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        //Getting arguments
-        if(getArguments() != null){
-            showMessage = getArguments().getString("Username");
-        }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.post_fragment, container, false);
-
-
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -76,9 +67,6 @@ public class Post extends Fragment {
             ft.replace(R.id.fragment_container, fragment);
             ft.addToBackStack(null);
             ft.commit();
-        }
-        if(showMessage != null){
-            Toast.makeText(getActivity(), "Welcome " + showMessage, Toast.LENGTH_SHORT).show();
         }
 
         //Setting up our options Spinner
@@ -213,12 +201,10 @@ public class Post extends Fragment {
             Publication p = new Publication(dateText.getText().toString(),selectedFrom,selectedTo,
                     carType.getText().toString(),carYear.getText().toString(),MainActivity.getUsername());
             //Starting Async task
-            new PostTask(v.getContext()).execute("Car",p.getDate(),p.getFrom(),p.getTo(),
-                    p.getCarname(),p.getCaryear());
+            new PostTask(v.getContext()).execute(selected,p.getDate(),p.getFrom(),p.getTo(),
+                    p.getCarname(),p.getCaryear(),p.getUsername());
 
-            //Throw AsynTask to do the Sign up and change to List fragment view
-            Toast.makeText(getActivity(), "Post added successfuly",
-                    Toast.LENGTH_SHORT).show();
+            //Throw AsynTask to create the post and change to List fragment view
             android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.replace(R.id.fragment_container, new List());
             ft.addToBackStack(null);
@@ -228,11 +214,9 @@ public class Post extends Fragment {
             Publication p = new Publication(dateText.getText().toString(),selectedFrom,MainActivity.getUsername());
 
             //Starting Async task
-            new PostTask(v.getContext()).execute("Taxi",p.getDate(),p.getFrom());
+            new PostTask(v.getContext()).execute(selected,p.getDate(),p.getFrom(),p.getUsername());
 
-            //Throw AsynTask to do the Sign up and change to List fragment view
-            Toast.makeText(getActivity(), "Post added successfuly",
-                    Toast.LENGTH_SHORT).show();
+            //Throw AsynTask to create the post and change to List fragment view
             android.support.v4.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.replace(R.id.fragment_container, new List());
             ft.addToBackStack(null);

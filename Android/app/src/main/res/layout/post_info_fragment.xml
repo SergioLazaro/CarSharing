@@ -9,7 +9,11 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.11">
+        android:layout_weight="0.11"
+        android:layout_marginTop="20dp"
+        android:background="#9dcdfc"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,7 +37,40 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.10" >
+        android:layout_weight="0.09"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="#9dcdfc"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: "
+            android:id="@+id/textView6"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp" />
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/displayDate"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.10"
+        android:layout_marginTop="20dp"
+        android:background="#9dcdfc"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
         <TextView
             style="@style/Base.TextAppearance.AppCompat.Subhead"
@@ -58,14 +95,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.08"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:id="@id/destinationLayout"
+        android:layout_marginTop="20dp"
+        android:background="#9dcdfc"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
         <TextView
             style="@style/Base.TextAppearance.AppCompat.Subhead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="To: "
-            android:id="@+id/textView7"
+            android:id="@+id/toTextView"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp" />
 
@@ -82,15 +124,20 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.09"
-        android:layout_gravity="center_horizontal">
+        android:layout_weight="0.08"
+        android:layout_gravity="right"
+        android:layout_marginTop="20dp"
+        android:background="#9dcdfc"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/cartypeLayout">
 
         <TextView
             style="@style/Base.TextAppearance.AppCompat.Subhead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date: "
-            android:id="@+id/textView6"
+            android:text="Car type: "
+            android:id="@+id/carTypeTextView"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp" />
 
@@ -98,8 +145,8 @@
             style="@style/Base.TextAppearance.AppCompat.Subhead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/displayDate"
             android:layout_gravity="center_vertical"
+            android:id="@+id/displayCarType"
             android:layout_marginLeft="20dp" />
     </LinearLayout>
 
@@ -108,38 +155,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.08"
-        android:layout_gravity="right">
-
-        <TextView
-            style="@style/Base.TextAppearance.AppCompat.Subhead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Car type: "
-            android:id="@+id/textView8"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp" />
-
-        <TextView
-            style="@style/Base.TextAppearance.AppCompat.Subhead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/displayCarType"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.08">
+        android:layout_marginTop="20dp"
+        android:background="#9dcdfc"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/caryearLayout">
 
         <TextView
             style="@style/Base.TextAppearance.AppCompat.Subhead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Car year: "
-            android:id="@+id/textView9"
+            android:id="@+id/carYearTextView"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp" />
 

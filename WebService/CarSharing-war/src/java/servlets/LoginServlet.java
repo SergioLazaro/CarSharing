@@ -18,6 +18,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 /**
  *
@@ -41,14 +42,16 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String version = request.getParameter("version");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        System.out.println("NUEVA PETICION DE " + email + " - " + password + " - " + version);
         try{
             if(email != null && password != null){
                 List<UserEntity> list = userSessionBean.getAll();
                 boolean found = false;
                 int i = 0;
-                while(!found){
+                while(!found && i < list.size()){
                     UserEntity user = list.get(i);
                     System.err.println(user.toString());
                     if(user.getEmail().equals(email) && 
@@ -57,20 +60,33 @@ public class LoginServlet extends HttpServlet {
                     }
                     i++;
                 }
-                if(found){
-                    Cookie cookie = createCookie(email);
-                    response.addCookie(cookie);
-                    response.sendRedirect("pages/index.jsp");
+                if(version.equals("web")){
+                    if(found){
+                        Cookie cookie = createCookie(email);
+                        response.addCookie(cookie);
+                        response.sendRedirect("pages/index.jsp");
+                    }
+                    else{
+                        response.sendRedirect("pages/index.jsp?error=3");
+                    }
                 }
-                else{
-                    response.sendRedirect("pages/index.jsp?error=3");
+                else if(version.equals("android")){
+                    response.setContentType("application/json");
+                    JSONObject confirmation = new JSONObject();
+                    if(found){
+                        confirmation.put("result","true");
+                    }
+                    else{
+                        confirmation.put("result","false");
+                    }
+                    response.getWriter().write(confirmation.toString());
                 }
             }
             else{
                 response.sendRedirect("pages/index.jsp?error=3");
             }
         }
-        catch(IOException ex){
+        catch(Exception ex){
             Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         

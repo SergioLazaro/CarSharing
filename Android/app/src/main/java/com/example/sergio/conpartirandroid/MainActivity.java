@@ -23,7 +23,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static String username = "sergio";
+    private static String username = "unknown";
     private static TextView email;
 
     @Override
@@ -120,7 +120,6 @@ public class MainActivity extends AppCompatActivity
 
     public static void setUsername(String newUsername){
         username = newUsername;
-        //email.setText(username);
     }
 
     public static String getUsername(){

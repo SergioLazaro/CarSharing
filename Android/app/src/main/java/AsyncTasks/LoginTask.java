@@ -5,10 +5,11 @@ package AsyncTasks;
  */
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.sergio.conpartirandroid.MainActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,6 +25,7 @@ public class LoginTask  extends AsyncTask<String,Void,String> {
     private Context context;
 
     private String email, password;
+    private static final String ip = "192.168.1.82";
 
     public LoginTask(Context context) {
         this.context = context;
@@ -40,8 +42,9 @@ public class LoginTask  extends AsyncTask<String,Void,String> {
         password = (String) arg0[1];
 
         try {
-            String link = "";
+            String link = "http://" + ip + ":8080/CarSharing-war/LoginServlet?version=android";
             String data  = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
+            //data += "&" + URLEncoder.encode("version","UTF-8") + "=" + URLEncoder.encode("android","UTF-8");
             data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
             URL url = new URL(link);
@@ -73,9 +76,20 @@ public class LoginTask  extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String line){
-        line = "true";
-        if(line.equals("true")){
-            MainActivity.setUsername(email);
+        Log.i("RESULT",line);
+        try {
+            JSONObject json = new JSONObject(line);
+            boolean result = Boolean.parseBoolean(json.getString("result"));
+            Log.i("VALUE","" + result);
+            if(!result){
+                Toast.makeText(context, "User " + email + " does not exist", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                MainActivity.setUsername(email);
+                Toast.makeText(context, "Welcome " + email, Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

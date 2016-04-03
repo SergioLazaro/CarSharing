@@ -87,13 +87,13 @@ public class Signup extends Fragment {
                 if (checked)
                     genderM.setChecked(true);   //Gender male checked by default
                     genderF.setChecked(false);   //Gender male checked by default
-                    genderInserted = "male";
+                    genderInserted = "M";
                     break;
             case R.id.femaleSignup:
                 if (checked)
                     genderM.setChecked(false);   //Gender male checked by default
                     genderF.setChecked(true);   //Gender male checked by default
-                    genderInserted = "female";
+                    genderInserted = "F";
                     break;
         }
     }

@@ -38,15 +38,14 @@ public class ListPostServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             List<PostEntity> array = postSessionBean.getPosts();
             String option = request.getParameter("type");
             JSONArray jsonArray = new JSONArray();
-            if(option.equals("car")){
+            if(option.equals("Car")){
                 jsonArray = populateCar(array);
             }
-            else if(option.equals("taxi")){
+            else if(option.equals("Taxi")){
                 jsonArray = populateTaxi(array);
             }
             JSONObject mainJSON = new JSONObject();

@@ -49,7 +49,7 @@
             %>
             <div class="alert alert-danger">
                     <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Error!</strong> There was a problem sending your order.
+                    <strong>Error!</strong> There was a problem creating your post.
                 </div>
             <%
         }

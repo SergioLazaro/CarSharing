@@ -5,7 +5,10 @@ package AsyncTasks;
  */
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.example.sergio.conpartirandroid.List;
 import com.example.sergio.conpartirandroid.MainActivity;
 
 import org.json.JSONArray;
@@ -18,12 +21,14 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.logging.Logger;
 
 
 public class PostTask  extends AsyncTask<String,Void,String> {
     private Context context;
 
-    private String postType, date, from, to, carname, caryear;
+    private String postType;
+    private static final String ip = "192.168.1.82";
 
     public PostTask(Context context) {
         this.context = context;
@@ -39,21 +44,23 @@ public class PostTask  extends AsyncTask<String,Void,String> {
         postType = (String)arg0[0];
 
         try {
-            String link = "";
+            String link = "http://" + ip + ":8080/CarSharing-war/PostServlet?version=android";
             String data = "";
             //Check postType to build the URL petition
             if(postType.equals("Car")){
-                data = URLEncoder.encode("postType", "UTF-8") + "=" + URLEncoder.encode("car", "UTF-8");
+                data = URLEncoder.encode("transport", "UTF-8") + "=" + URLEncoder.encode(postType, "UTF-8");
                 data += "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode((String) arg0[1], "UTF-8");
-                data += "&" + URLEncoder.encode("from", "UTF-8") + "=" + URLEncoder.encode((String) arg0[2], "UTF-8");
-                data += "&" + URLEncoder.encode("to", "UTF-8") + "=" + URLEncoder.encode((String) arg0[3], "UTF-8");
-                data += "&" + URLEncoder.encode("carname", "UTF-8") + "=" + URLEncoder.encode((String) arg0[4], "UTF-8");
+                data += "&" + URLEncoder.encode("departure", "UTF-8") + "=" + URLEncoder.encode((String) arg0[2], "UTF-8");
+                data += "&" + URLEncoder.encode("destination", "UTF-8") + "=" + URLEncoder.encode((String) arg0[3], "UTF-8");
+                data += "&" + URLEncoder.encode("cartype", "UTF-8") + "=" + URLEncoder.encode((String) arg0[4], "UTF-8");
                 data += "&" + URLEncoder.encode("caryear", "UTF-8") + "=" + URLEncoder.encode((String) arg0[5], "UTF-8");
+                data += "&" + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode((String) arg0[6], "UTF-8");
             }
             else{
-                data = URLEncoder.encode("postType", "UTF-8") + "=" + URLEncoder.encode("car", "UTF-8");
+                data = URLEncoder.encode("transport", "UTF-8") + "=" + URLEncoder.encode(postType, "UTF-8");
                 data += "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode((String) arg0[1], "UTF-8");
-                data += "&" + URLEncoder.encode("from", "UTF-8") + "=" + URLEncoder.encode((String) arg0[2], "UTF-8");
+                data += "&" + URLEncoder.encode("departure", "UTF-8") + "=" + URLEncoder.encode((String) arg0[2], "UTF-8");
+                data += "&" + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode((String) arg0[3], "UTF-8");
             }
             URL url = new URL(link);
             URLConnection conn = url.openConnection();
@@ -84,7 +91,21 @@ public class PostTask  extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String line){
-
+        //line is a JSON Array
+        Log.i("RESULT POST", line);
+        try {
+            JSONObject json = new JSONObject(line);
+            boolean result = Boolean.parseBoolean(json.getString("result"));
+            Log.i("VALUE POST","" + result);
+            if(!result){
+                Toast.makeText(context,"New post cannot be added",Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(context,"New post added successfully",Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 

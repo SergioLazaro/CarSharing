@@ -5,6 +5,7 @@ package AsyncTasks;
  */
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.sergio.conpartirandroid.MainActivity;
@@ -31,6 +32,7 @@ public class SignupTask  extends AsyncTask<String,Void,String> {
 
     private User userObject;
     private String user;
+    private static final String ip = "192.168.1.82";
 
     public SignupTask(Context context) {
         this.context = context;
@@ -47,7 +49,7 @@ public class SignupTask  extends AsyncTask<String,Void,String> {
         userObject = getUserObject(user);
 
         try {
-            String link = "";
+            String link = "http://" + ip + ":8080/CarSharing-war/SignupServlet?version=android";
             String data  = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(userObject.getEmail(), "UTF-8");
             data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(userObject.getPassword(), "UTF-8");
             data += "&" + URLEncoder.encode("birth", "UTF-8") + "=" + URLEncoder.encode(userObject.getBirth(), "UTF-8");
@@ -84,16 +86,22 @@ public class SignupTask  extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String line){
-        line = "true";
-        if(line.equals("true")){
-            Toast.makeText(context, "User " + userObject.getName() + " " +
-                    userObject.getSurname() + " registered.", Toast.LENGTH_SHORT).show();
-            MainActivity.setUsername(userObject.getName() + " " + userObject.getSurname());
-        }
-        else{
-            Toast.makeText(context, "There was a problem while adding user " +
-                    userObject.getName() + " " + userObject.getSurname(),
-                    Toast.LENGTH_SHORT).show();
+        Log.i("RESULT SIGN UP", line);
+        try {
+            JSONObject json = new JSONObject(line);
+            boolean result = Boolean.parseBoolean(json.getString("result"));
+            Log.i("VALUE SIGN UP", "" + result);
+            if (result) {
+                Toast.makeText(context, "User " + userObject.getEmail() + " registered.",
+                        Toast.LENGTH_SHORT).show();
+                MainActivity.setUsername(userObject.getEmail());
+            } else {
+                Toast.makeText(context, "There was a problem while adding user " +
+                                userObject.getName() + " " + userObject.getSurname(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

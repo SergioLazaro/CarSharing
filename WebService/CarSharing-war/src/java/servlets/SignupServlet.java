@@ -17,6 +17,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -38,30 +40,47 @@ public class SignupServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+            throws ServletException, IOException, JSONException {
+        //Getting parameters
+        String version = request.getParameter("version");
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String gender = request.getParameter("gender");
         String birth = request.getParameter("birth");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        try{
-            if(name != null && surname != null && gender != null && birth != null
+        if(name != null && surname != null && gender != null && birth != null
                     && email != null && password != null){
-                User user = new User(name,surname,gender,birth,email,password);
-                System.err.println(user.toString());
-                userSessionBean.addUser(user);
-                Cookie cookie = createCookie(email);
+            User user = new User(name,surname,gender,birth,email,password);
+            userSessionBean.addUser(user);
+            System.err.println(user.toString());
+            if(version.equals("web")){
+                response.setContentType("text/html;charset=UTF-8");
+                Cookie cookie = new Cookie("email",email);
+                cookie.setMaxAge(60*60*24*365);
                 response.addCookie(cookie);                    
                 response.sendRedirect("pages/index.jsp?error=1");
             }
-            else{
+            else if(version.equals("android")){
+                response.setContentType("application/json");
+                JSONObject confirmation = new JSONObject();
+                confirmation.put("result","true");
+                response.getWriter().write(confirmation.toString());
+            }
+        }
+        else{
+            if(version.equals("web")){
+                response.setContentType("text/html;charset=UTF-8");
                 response.sendRedirect("pages/index.jsp?error=2");
             }
-        } catch (IOException ex) {
-            Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
+            else if(version.equals("android")){
+                response.setContentType("application/json");
+                JSONObject confirmation = new JSONObject();
+                confirmation.put("result","false");
+                response.getWriter().write(confirmation.toString());
+            }
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -76,7 +95,11 @@ public class SignupServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (JSONException ex) {
+            Logger.getLogger(SignupServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -90,23 +113,11 @@ public class SignupServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (JSONException ex) {
+            Logger.getLogger(SignupServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
     
-    private Cookie createCookie(String email){
-        //User cookies should be created
-        Cookie userCookie = new Cookie("email",email);
-        userCookie.setMaxAge(60*60*24*365);
-        return userCookie;
-    }
 }

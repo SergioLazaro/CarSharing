@@ -3,7 +3,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="main-container">
     <div class="main-container-signin">
-        <form class="form-signin" action="../SignupServlet" method="POST">
+        <form class="form-signin" action="../SignupServlet?version=web" method="POST">
             <h2> Please sign up</h2>
             <label class="sr-only">Name</label>
             <input name="name" class="form-control" type="text" autofocus="" required placeholder="Name"/>

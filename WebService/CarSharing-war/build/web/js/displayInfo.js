@@ -1,11 +1,11 @@
 $(document).ready(function(){
     $('#postTypeSelector').on('change',function(){
         document.getElementById("container-info").innerHTML = "";
-        if($(this).val() === 'car'){    //Get just car posts
-            displayElements("car");
+        if($(this).val() === 'Car'){    //Get just car posts
+            displayElements("Car");
         }
         else{                           //Get just taxi posts
-            displayElements("taxi");
+            displayElements("Taxi");
         }
     });
 });

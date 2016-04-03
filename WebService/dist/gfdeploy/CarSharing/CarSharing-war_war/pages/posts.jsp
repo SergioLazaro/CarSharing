@@ -23,13 +23,13 @@
         if(username != null){   //If user has logged in
             %>
             <div class="main-container-signin" id="grey-background">
-                <form action="../PostServlet" method="POST">
+                <form action="../PostServlet?version=web" method="POST">
                     <h2> Choose your transport</h2></br>
                     <div class="spinner-container">
                         <label class="padded-label">Transport: </label>
                         <select name="transport" id="transport-selector">
-                            <option value="car" default>Car</option>
-                            <option value="taxi">Taxi</option>
+                            <option value="Car" default>Car</option>
+                            <option value="Taxi">Taxi</option>
                         </select>
                     </div>
                     <div class="vehicle">

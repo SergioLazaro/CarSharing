@@ -14,7 +14,7 @@
         }
     %>
     <div class="main-container-signin">
-        <form class="form-signin" action="../LoginServlet" method="POST">
+        <form class="form-signin" action="../LoginServlet?version=web" method="POST">
             <h2> Please sign in</h2>
             <label class="sr-only">Username</label>
             <input name="email" class="form-control" type="text" autofocus="" required placeholder="Email"/>

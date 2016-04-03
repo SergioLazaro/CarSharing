@@ -16,6 +16,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -25,7 +27,7 @@ public class PostServlet extends HttpServlet {
 
     @EJB
     private PostSessionBean postSessionBean;
-    
+    private String postType, date, departure, destination, carType, carYear, email;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,23 +39,56 @@ public class PostServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException {
+            throws ServletException, IOException, JSONException {
         response.setContentType("text/html;charset=UTF-8");
         
-        //Getting parameters
-        Cookie[] cookies = request.getCookies();
-        String email = "";
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("email")) {
-                email = cookie.getValue();
+        String version = request.getParameter("version");
+        postType = request.getParameter("transport");
+        date = request.getParameter("date");
+        departure = request.getParameter("departure");
+        destination = request.getParameter("destination");
+        carType = request.getParameter("cartype");
+        carYear = request.getParameter("caryear");
+        if(version.equals("web")){
+            //Getting parameters
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("email")) {
+                    email = cookie.getValue();
+                }
+            }
+            //Add new post
+            insertNewPost();
+            
+            //Generate the response
+            try {
+                response.sendRedirect("pages/index.jsp?error=0");
+            } catch (IOException ex) {
+                Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect("pages/index.jsp?error=4");
             }
         }
-        String postType = request.getParameter("transport");
-        String date = request.getParameter("date");
-        String departure = request.getParameter("departure");
-        String destination = request.getParameter("destination");
-        String carType = request.getParameter("cartype");
-        String carYear = request.getParameter("caryear");
+        else if(version.equals("android")){
+            email = request.getParameter("username");
+            //Add new post
+            insertNewPost(); 
+            
+            //Generate the response
+            response.setContentType("application/json");
+            JSONObject confirmation = new JSONObject();
+            try{
+                confirmation.put("result", "true");
+                response.getWriter().write(confirmation.toString());
+            }
+            catch(JSONException ex){
+                Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
+                confirmation.put("result","false");
+                response.getWriter().write(confirmation.toString());
+            }
+        }       
+    }
+    
+    private void insertNewPost(){
         if(postType.equals("car")){
             postSessionBean.insertCarPost(email,date,departure,destination,
                         carType,carYear);
@@ -61,13 +96,8 @@ public class PostServlet extends HttpServlet {
         else{
             postSessionBean.insertTaxiPost(email,date,departure);
         }
-        try {
-            response.sendRedirect("pages/index.jsp?error=0");
-        } catch (IOException ex) {
-            Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -80,7 +110,11 @@ public class PostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (JSONException ex) {
+            Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -94,7 +128,11 @@ public class PostServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (JSONException ex) {
+            Logger.getLogger(PostServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

@@ -104,7 +104,9 @@ public class UserEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.UserEntity[ id=" + id + " ]";
+        return "UserEntity{" + "id=" + id + ", name=" + name + ", surname=" + surname + ", gender=" + gender + ", birth=" + birth + ", email=" + email + ", password=" + password + '}';
     }
+
+
     
 }

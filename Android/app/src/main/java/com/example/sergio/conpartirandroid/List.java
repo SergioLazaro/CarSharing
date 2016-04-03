@@ -11,11 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import AsyncTasks.ListTask;
 import Objects.Publication;
 
 /**
@@ -24,11 +24,10 @@ import Objects.Publication;
 public class List extends Fragment {
 
     private static final String[] spinnerOptions = {"Car","Taxi"};
-    private String selected = "Car";
-    private ListView list;
-    private ArrayList<HashMap<String,String>> array;
-    private ArrayList<Publication> carPublications, taxiPublications;
-    private SimpleAdapter arrayAdapter;
+    private static String selected = "Car";
+    private static ListView list;
+    private static ArrayList<Publication> carPublications, taxiPublications;
+    private static SimpleAdapter arrayAdapter;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,9 +40,6 @@ public class List extends Fragment {
         //Creating arrays to load data from AsyncTasks
         carPublications = new ArrayList<Publication>();
         taxiPublications = new ArrayList<Publication>();
-        //Populate both arrays
-        populateCars();
-        populateTaxis();
 
         //Setting up the spinner
         Spinner spinner = (Spinner) view.findViewById(R.id.listSpinner);
@@ -56,14 +52,7 @@ public class List extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selected = spinnerOptions[position];
-                Toast.makeText(getActivity(), selected, Toast.LENGTH_SHORT).show();
-                if(selected.equals("Car")){
-
-                }
-                else{
-                    //Start AsyncTask to get Taxis
-                }
-                populateArray(selected, parentView);
+                new ListTask(parentView.getContext()).execute(selected);
             }
 
             @Override
@@ -73,13 +62,8 @@ public class List extends Fragment {
 
         //Setting up ListView
         list = (ListView) view.findViewById(R.id.listView);
-        array = new ArrayList<HashMap<String,String>>();
-        populateArray(selected,view);
-        arrayAdapter = new SimpleAdapter (view.getContext(), array, android.R.layout.two_line_list_item ,
-                new String[] { "User","DateFromTo" },
-                new int[] {android.R.id.text1, android.R.id.text2});
-        list.setAdapter(arrayAdapter);
-
+        //new ListTask(view.getContext()).execute(selected);
+        //list.setAdapter(arrayAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView adapterView, View view, int position, long id) {
@@ -114,53 +98,14 @@ public class List extends Fragment {
 
     }
 
-    private void populateArray(String type, View view){
-        ArrayList<HashMap<String, String>> newArray = new ArrayList<HashMap<String, String>>();
-        if(type.equals("Car")){
-            for(int i = 0; i < carPublications.size(); i++){
-                HashMap<String, String> din = new HashMap<String, String>(2);
-                Publication p = carPublications.get(i);
-                din.put("User",p.getUsername());
-                din.put("DateFromTo", p.getFrom() + " - " + p.getTo() + " " + p.getDate());
-                newArray.add(din);
-            }
-            array = newArray;
-            restartAdapter(newArray,view);
+    public static void setAdapter(SimpleAdapter newAdapter, ArrayList<Publication> array){
+        if(selected.equals("Car")){
+            carPublications = array;
         }
         else{
-            for(int i = 0; i < taxiPublications.size(); i++){
-                HashMap<String, String> din = new HashMap<String, String>(2);
-                Publication p = taxiPublications.get(i);
-                din.put("User",p.getUsername());
-                din.put("DateFromTo", p.getFrom()  + " " + p.getDate());
-                newArray.add(din);
-            }
-            array = newArray;
-            restartAdapter(newArray, view);
+            taxiPublications = array;
         }
-
-    }
-
-    public void populateCars(){
-        //Adding some elements
-        Publication p1 = new Publication("25/02/2016","Torino","Milano","BMW s1","2014",MainActivity.getUsername());
-        Publication p2 = new Publication("25/02/2016","Bologna","Firenze","Fiat punto","2014",MainActivity.getUsername());
-        carPublications.add(p1);
-        carPublications.add(p2);
-    }
-    public void populateTaxis(){
-        Publication p1 = new Publication("22/02/2016","Torino",MainActivity.getUsername());
-        taxiPublications.add(p1);
-    }
-
-    private void restartAdapter(ArrayList<HashMap<String,String>> newArray, View view){
-        arrayAdapter = new SimpleAdapter (view.getContext(), newArray, android.R.layout.two_line_list_item ,
-                new String[] { "User","DateFromTo" },
-                new int[] {android.R.id.text1, android.R.id.text2});
+        arrayAdapter = newAdapter;
         list.setAdapter(arrayAdapter);
-    }
-
-    public static void modifyArrayList(ArrayList<String> newArray){
-       // array = newArray;
     }
 }

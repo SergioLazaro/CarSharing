@@ -3,21 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/web/js/managePosts.js</file>
             <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/src/java/servlets/LoginServlet.java</file>
-            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/web/pages/vehicle.jsp</file>
-            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/web/WEB-INF/web.xml</file>
-            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/src/java/servlets/SignupServlet.java</file>
-            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/src/java/servlets/ListPostServlet.java</file>
-            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/web/pages/signup.jsp</file>
-            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/src/java/servlets/PostServlet.java</file>
-            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/web/pages/posts.jsp</file>
             <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/web/js/displayInfo.js</file>
-            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/web/pages/about.jsp</file>
-            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/web/pages/login.jsp</file>
-            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/web/pages/index.jsp</file>
-            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/web/pages/top.jsp</file>
-            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/web/css/mystyle.css</file>
+            <file>file:/Volumes/Data%20HDD/NetBeans%20Projects/CarSharing/CarSharing-war/src/java/servlets/ListPostServlet.java</file>
         </group>
     </open-files>
 </project-private>
