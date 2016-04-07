@@ -33,7 +33,7 @@ public class ListTask  extends AsyncTask<String,Void,String> {
     private Context context;
 
     private String listType;
-    private static final String ip = "192.168.1.82";
+    private static final String ip = "";    //Put your ip here
 
     public ListTask(Context context) {
         this.context = context;
@@ -94,7 +94,13 @@ public class ListTask  extends AsyncTask<String,Void,String> {
                 //Populating info to show
                 HashMap<String, String> din = new HashMap<String, String>(2);
                 din.put("User",p.getUsername());
-                din.put("DateFromTo", p.getFrom() + " " + p.getDate());
+                if(listType.equals("Car")){
+                    din.put("DateFromTo",p.getFrom() + " - " + p.getTo() + " " + p.getDate());
+                }
+                else{
+                    din.put("DateFromTo", p.getFrom() + " " + p.getDate());
+                }
+
                 infoToShow.add(din);
             }
             SimpleAdapter arrayAdapter = new SimpleAdapter(context, infoToShow, android.R.layout.two_line_list_item ,

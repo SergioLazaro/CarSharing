@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    displayElements("Car");
     $('#postTypeSelector').on('change',function(){
         document.getElementById("container-info").innerHTML = "";
         if($(this).val() === 'Car'){    //Get just car posts
@@ -81,9 +82,5 @@ function displayElements(postType){
       }
     });
 }
-
-$(document).ready(function(){
-     displayElements("car");
-});
 
 

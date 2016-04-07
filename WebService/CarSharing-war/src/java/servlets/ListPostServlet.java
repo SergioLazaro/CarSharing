@@ -50,7 +50,6 @@ public class ListPostServlet extends HttpServlet {
             }
             JSONObject mainJSON = new JSONObject();
             mainJSON.put("posts", jsonArray);
-            //response.setContentType("text/html");
             response.setContentType("application/json");
             response.getWriter().write(mainJSON.toString());
         }

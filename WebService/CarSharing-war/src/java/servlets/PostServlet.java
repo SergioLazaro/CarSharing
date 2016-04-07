@@ -89,7 +89,7 @@ public class PostServlet extends HttpServlet {
     }
     
     private void insertNewPost(){
-        if(postType.equals("car")){
+        if(postType.equals("Car")){
             postSessionBean.insertCarPost(email,date,departure,destination,
                         carType,carYear);
         }

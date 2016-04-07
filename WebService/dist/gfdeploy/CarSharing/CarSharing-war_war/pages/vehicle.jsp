@@ -6,8 +6,8 @@
 <div class="main-container" id="container">
     
     <select name="selectedPostType" id="postTypeSelector">
-        <option value="car" default>Car</option>
-        <option value="taxi">Taxi</option>
+        <option value="Car" selected="selected">Car</option>
+        <option value="Taxi">Taxi</option>
     </select>
     
     <div class="info-container" id="container-info"></div>

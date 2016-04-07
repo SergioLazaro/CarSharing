@@ -32,7 +32,7 @@ public class SignupTask  extends AsyncTask<String,Void,String> {
 
     private User userObject;
     private String user;
-    private static final String ip = "192.168.1.82";
+    private static final String ip = "";    //Put your ip here
 
     public SignupTask(Context context) {
         this.context = context;

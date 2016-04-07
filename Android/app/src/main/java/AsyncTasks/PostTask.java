@@ -28,7 +28,7 @@ public class PostTask  extends AsyncTask<String,Void,String> {
     private Context context;
 
     private String postType;
-    private static final String ip = "192.168.1.82";
+    private static final String ip = ""; //Put your ip here
 
     public PostTask(Context context) {
         this.context = context;
